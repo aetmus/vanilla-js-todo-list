@@ -1,0 +1,73 @@
+:root {
+  --delete: hsl(0, 80%, 42%);
+  --primary: hsl(0, 0%, 45%);
+  --secondary: hsl(0, 0%, 25%);
+  --text: hsl(0, 0%, 95%);
+}
+
+.material-icons {
+  cursor: pointer;
+  color: var(--delete);
+}
+
+body {
+  background-color: var(--secondary);
+  color: var(--text);
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+    'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+h1,
+h2 {
+  text-align: center;
+}
+
+form {
+  width: 60%;
+  margin: auto;
+  text-align: center;
+}
+
+[type='submit'] {
+  background-color: var(--primary);
+  border-radius: 5px;
+}
+
+[type='text'] {
+  background-color: var(--secondary);
+  border: none;
+  color: var(--text);
+  border-bottom: 1px solid var(--primary);
+}
+
+[type='text']:focus {
+  outline: none;
+}
+
+#todos-list {
+  width: 80%;
+  margin: auto;
+}
+
+.todo {
+  width: 100%;
+  margin: auto;
+  background-color: var(--primary);
+  border-radius: 5px;
+  margin-bottom: 1.5em;
+  overflow: auto;
+}
+
+.todo .material-icons {
+  padding-right: 2em;
+  padding-top: 1.5em;
+  height: 1em;
+  width: auto;
+  float: right;
+}
+
+.todo .todo-text {
+  display: inline-block;
+  line-height: 4em;
+  padding-left: 2em;
+}
