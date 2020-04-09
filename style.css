@@ -56,6 +56,9 @@ form {
   border-radius: 5px;
   margin-bottom: 1.5em;
   overflow: auto;
+  animation-name: todo;
+  animation-timing-function: ease-in;
+  animation-duration: 500ms;
 }
 
 .todo .material-icons {
@@ -70,4 +73,13 @@ form {
   display: inline-block;
   line-height: 4em;
   padding-left: 2em;
+}
+
+@keyframes todo {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
