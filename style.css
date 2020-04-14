@@ -17,8 +17,7 @@ body {
     'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-h1,
-h2 {
+h1 {
   text-align: center;
 }
 
@@ -47,6 +46,7 @@ form {
 #todos-list {
   width: 80%;
   margin: auto;
+  margin-top: 1.5rem;
 }
 
 .todo {
@@ -56,14 +56,11 @@ form {
   border-radius: 5px;
   margin-bottom: 1.5em;
   overflow: auto;
-  animation-name: todo;
-  animation-timing-function: ease-in;
-  animation-duration: 500ms;
 }
 
 .todo .material-icons {
   padding-right: 2em;
-  padding-top: 1.5em;
+  padding-top: 1em;
   height: 1em;
   width: auto;
   float: right;
@@ -75,11 +72,6 @@ form {
   padding-left: 2em;
 }
 
-@keyframes todo {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+.done {
+  text-decoration: line-through;
 }
