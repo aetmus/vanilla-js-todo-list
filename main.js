@@ -14,7 +14,6 @@
 
   // add a todo
   function addTodo(e) {
-    console.log('works');
     e.preventDefault();
     const title = this.querySelector('[name=todo]').value;
     const id = uuidv4();
