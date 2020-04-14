@@ -1,18 +1,8 @@
 (function() {
-  const todosDiv = document.getElementById('todos-list');
+  const todosList = document.getElementById('todos-list');
   const form = document.getElementById('add-todo');
 
-  let todos = [];
-
-  // create html for a todo object
-  function createHTMLfromTodoObject(todo) {
-    return `
-  <div class="todo">
-  <p class="todo-text" key="${todo.id}">${todo.title}</p>
-  <i class="material-icons">delete</i>
-  </div>
-  `;
-  }
+  let todos = JSON.parse(localStorage.getItem('todos')) || [];
 
   // create a unique ID
   function uuidv4() {
@@ -24,46 +14,58 @@
 
   // add a todo
   function addTodo(e) {
+    console.log('works');
     e.preventDefault();
-    const title = form[0].value;
-    let id = uuidv4();
-    let newTodo = { title, id };
-    todos.push(newTodo);
-    updateUI();
-    form[0].value = '';
+    const title = this.querySelector('[name=todo]').value;
+    const id = uuidv4();
+    const todo = { title, id, done: false };
+    todos.push(todo);
+    populateList(todos, todosList);
+    localStorage.setItem('todos', JSON.stringify(todos));
+    this.reset();
   }
 
   // function to update UI
-  function updateUI() {
-    if (todos.length === 0) {
-      todosDiv.innerHTML = '';
-    } else {
-      todosDiv.innerHTML = '<h2>Todos</h2>'
-    }
-    todos.forEach(todo => {
-      const todoHTML = createHTMLfromTodoObject(todo);
-      todosDiv.innerHTML += todoHTML;
-    });
-    addDeleteEventListeners();
+  function populateList(todos = [], todosList) {
+    todosList.innerHTML = todos
+      .map((todo, i) => {
+        return `
+        <li class="todo">
+          <input type="checkbox" data-index=${i} id=${todo.id} ${todo.done ? 'checked' : ''} />
+          <label class="todo-text ${todo.done ? 'done' : ''}" for="${todo.id}">${todo.title}
+          </label> 
+          <i class="material-icons" data-index=${i}>delete</i>
+        </li>
+        `;
+      }).join('');
   }
 
   // Delete a todo
   function deleteTodo(e) {
-    let todoIDtoDelete = e.target.previousElementSibling.attributes.key.value;
-    let newTodosArray = todos.filter(todo => todo.id !== todoIDtoDelete);
-    todos = [...newTodosArray];
-    updateUI();
+    // don't do anything unless the trash icon is clicked
+    if (!e.target.matches('i')) return;
+    const el = e.target;
+    const index = el.dataset.index;
+    todos.splice(index, 1);
+    localStorage.setItem('todos', JSON.stringify(todos));
+    populateList(todos, todosList);
+  }
+
+  function toggleDone(e) {
+    if (!e.target.matches('input')) return;
+    const el = e.target;
+    const index = el.dataset.index;
+    todos[index].done = !todos[index].done;
+    localStorage.setItem('todos', JSON.stringify(todos));
+    populateList(todos, todosList);
   }
 
   // hook up event listeners
   form.addEventListener('submit', addTodo);
+  todosList.addEventListener('click', deleteTodo);
+  todosList.addEventListener('click', toggleDone);
 
-  // add event listeners to delete buttons
-  function addDeleteEventListeners() {
-    const deleteButtons = document.querySelectorAll('.material-icons');
-    deleteButtons.forEach(button => button.addEventListener('click', deleteTodo));
-  }
 
   // Update UI on load
-  updateUI();
+  populateList(todos, todosList);
 })()
